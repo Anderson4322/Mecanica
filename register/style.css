@@ -1,0 +1,85 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+     background-color: #0d0d0d;
+}
+
+div {
+    width: 350px;
+    background: #f5f5f5;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, .45);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form::before {
+    content: "Criar Conta";
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #3d3d3d;
+    margin-bottom: 6px;
+}
+
+input {
+    width: 100%;
+    height: 36px;
+    border: 2px solid #bdbdbd;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 14px;
+    background: #ffffff;
+    color: #1a1a1a;
+    transition: .3s;
+}
+
+input:focus {
+    border-color: #ff3b00;
+    box-shadow: 0 0 0 2px rgba(255, 59, 0, .15);
+}
+
+#cadastro {
+    height: 42px;
+    border: none;
+    border-radius: 8px;
+    background: #111111;
+    color: #ff3b00;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+}
+
+#cadastro:hover {
+    background: #ff3b00;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(255, 59, 0, .35);
+}
+
+#cadastro:active {
+    transform: scale(.98);
+}

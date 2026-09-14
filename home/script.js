@@ -1,0 +1,199 @@
+const userName = document.querySelector("h2")
+const btnlogin = document.querySelector(".login")
+const btnCadastro = document.querySelector(".cadastro")
+const cargo = localStorage.getItem("cargo")
+const nome = localStorage.getItem("nome")
+
+
+const alertModal = document.querySelector("#modalLogin");
+if (!nome) {
+    userName.textContent = " Visitante"
+} else if (cargo == 2) {
+    userName.textContent = `Bem vindo funcionario: ${nome}`
+} else{
+    userName.textContent = `Bem vindo ${nome}`
+}
+
+const openButton = document.querySelector("#open")
+
+
+if (cargo == 1) {
+    openButton.style.display = "none"
+}
+const modal = document.querySelector("#modal")
+document.querySelector("#open").addEventListener('click', () => {
+    const user = localStorage.getItem("nome")
+
+    if (!user) {
+        return alertModal.showModal()
+    }
+    modal.showModal()
+})
+document.querySelector("#close").addEventListener('click', () => {
+    modal.close()
+})
+
+const form = document.querySelector("form")
+const corpo = document.querySelector("tbody")
+const quantidade = document.querySelector("#nProdutos")
+
+let total = 0;
+if (total == 0) {
+    quantidade.textContent = "Nenhum treino foi listado"
+}
+
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const dat_entrada = document.querySelector("#dat_entrada").value;
+    const descricao = document.querySelector("#descricao").value;
+    const tipo_servico = document.querySelector("#tipo_servico").value;
+    const situacao = document.querySelector("#situacao").value;
+    const valor = document.querySelector("#valor").value;
+    const id_veiculo = document.querySelector("#id_usuario").value;
+
+    const resposta = await fetch(`${api}cad_services`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+        dat_entrada,
+        descricao,
+        tipo_servico,
+        situacao,
+        valor,
+        id_veiculo
+        }),
+    });
+
+    if (resposta.status == 201) {
+        const Produto = await resposta.json();
+        alert("Serviço adicionado")
+        window.location.reload()
+    } else {
+        alert("Erro");
+
+    }
+});
+
+const disconnect = document.querySelector("#disconnect")
+disconnect.addEventListener('click', () => {
+    localStorage.clear()
+    alert("System from disconnect..")
+    window.location.replace("../Connect/index.html")
+})
+
+const id_fabric = document.querySelector("#id_usuario")
+let prods = [];
+
+const id_clients = localStorage.getItem("id")
+window.addEventListener("load", async () => {
+    const resposta = await fetch(`${api}manutencao/${cargo}/${id_clients}`);
+    const usuarios = await fetch(`${api}carrosUsers`);
+
+    prods = await resposta.json();
+    const users = await usuarios.json();
+    users.forEach((prod) => {
+        id_fabric.innerHTML += `
+      <option value="${prod.id_clients}">${prod.modelo} de ${prod.nome_user}</option>
+      `;
+    })
+
+
+    renderizar(prods);
+});
+
+
+function renderizar(prods) {
+    prods.forEach((element) => {
+        corpo.innerHTML += `     <tr>
+                <td>${element.id_services}</td>
+                <td>${element.nome_user}</td>
+                <td>${element.modelo}</td>
+                <td>${element.marca}</td>
+                <td>${element.cor}</td>
+                <td>${element.descricao}</td>
+                <td>${element.dat_entrada}</td>
+                <td>${element.dat_saida}</td>
+                <td>${element.situacao}</td>
+                <td>${element.tipo_servico}</td>
+                <td>${element.valor}</td>
+                <td>
+                <div id="buttonMove">
+                ${cargo != 1 ? `<button id="deletar" onclick="deletar(${element.id_services})">🗑️</button>` : '<div></div>'}
+                ${cargo != 1 ? `<button id="editar" onclick="editar(${element.id_services})">✏️</button>` : '<div></div>'}                
+                ${cargo != 1 ? `<button id="ficha" onclick="ficha(${element.id_clients})">🗃️</button>` : '<div></div>'}                
+                </div>
+                </td>
+            </tr>`;
+        total++;
+        quantidade.textContent = "Total de serviços:" + total;
+    });
+}
+
+async function ficha(id) {
+    console.log(id)
+    const closeDetalhes = document.querySelector("#closeDetalhes")
+    closeDetalhes.addEventListener('click', () => {
+        const modalDetalhes = document.querySelector("#DetalhesModal")
+        modalDetalhes.close()
+    })
+
+    const usuario = await fetch(`${api}usuario_especif/${id}`);
+    const user = await usuario.json();
+    const divDesativar = document.querySelector("#divDesativar")
+    const modalDetalhes = document.querySelector("#DetalhesModal")
+    const Nome_aluno = document.querySelector("#Nome_aluno")
+    const Detalhes_modelo = document.querySelector("#Detalhes_modelo")
+    const Detalhes_marca = document.querySelector("#Detalhes_marca")
+    const Detalhes_placa = document.querySelector("#Detalhes_placa")
+    const Detalhes_cor = document.querySelector("#Detalhes_cor")
+    const Detalhes_Ano = document.querySelector("#Detalhes_Ano")
+
+
+    Nome_aluno.textContent = `Ficha do Proprietario: ${user.nome_user}`
+    Nome_aluno.style.fontSize = "20px"
+    Detalhes_modelo.textContent = `${user.modelo}`
+    Detalhes_marca.textContent = ` ${user.marca}`
+    Detalhes_placa.textContent = `${user.placa_veiculo}`
+    Detalhes_Ano.textContent = `${user.ano_veiculo}`
+    Detalhes_cor.textContent = `${user.cor}`
+
+    modalDetalhes.showModal()
+}
+
+
+
+
+async function deletar(id) {
+    const resposta = await fetch(`${api}deleta/${id}`, {
+        method: "DELETE",
+    });
+    if (resposta.status == 200) {
+        return window.location.reload();
+    }
+    return alert("erro ao deletar");
+}
+
+async function editar(id) {
+    const produto = await fetch(`${api}treinos_especif/${id}`);
+    const prod = await produto.json();
+    const datas = {
+        nome_treino: prompt("Nome do treino", prod.nome_treino),
+        exercicio: prompt("Exercicios", prod.exercicio),
+
+    };
+    const resposta = await fetch(`${api}editar/${id}`, {
+        method: "put",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(datas),
+    });
+    if (resposta.status == 201) {
+        window.location.reload()
+    }
+    else {
+
+        return alert("erro ao editar");
+    }
+}

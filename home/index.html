@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mecanica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div>
+        <header>
+            <h1 id="Titulo">Mecanica</h1>
+            <div id="headerMove">
+
+                <h2></h2>
+                <button id="disconnect">disconnect</button>
+            </div>
+            <!-- <input type="color" name="cor" id="inputcolor">
+            <div id="cardcolor"></div> -->
+        </header>
+
+        <div id="moveAdress">
+
+            <button id="open">+</button>
+        </div>
+        <dialog id="modal">
+
+            <form>
+                <div id="closeMove">
+
+                    <button type="button" id="close">X</button>
+                </div>
+                <label for="Data de entrada">Data de entrada</label>
+                <input type="date" name="Data de entrada" id="dat_entrada">
+                <label for="Descrição">Descrição:</label>
+                <input type="text" name="Descrição" id="descricao">
+                <label for="tipo de serviço">Tipo de serviço:</label>
+                <input type="text" name="tipo de serviço" id="tipo_servico">
+                <label for="valor">Valor:</label>
+                <input type="text" name="valor" id="valor">
+                <label for="Situação">Situação:</label>
+                <select name="Situação" id="situacao">
+                    <option value="Em andamento">Em andamento</option>
+                    <option value="Finalizado">Finalizado</option>
+                </select>
+                <label for="usuario">Usuarios:</label>
+                <select name="usuario" id="id_usuario">
+                    </select>
+                    <button id="btn-confirmar" type="submit">Confirmar</button>
+            </form>
+        </dialog>
+        <div id="text-information">
+            <p id="nProdutos"></p>
+        </div>
+        <div id="moveTable">
+
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>id_servico</th>
+                        <th>Nome de proprietario</th>
+                        <th>Modelo</th>
+                        <th>Marca</th>
+                        <th>Cor do veiculo</th>
+                        <th>Descrição</th>
+                        <th>Situação do veiculo</th>
+                        <th>Data de entrada</th>
+                        <th>Data de saida</th>
+                        <th>Tipo de serviço</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <dialog id="DetalhesModal">
+
+
+
+        <button id="closeDetalhes" aria-label="Fechar modal">
+            X
+        </button>
+
+        <div id="Detalhes">
+
+            <div class="modal-header">
+                <h1 id="Nome_aluno"></h1>
+            </div>
+
+            <div class="detalhes-grid">
+
+                <div class="detalhe-item">
+                    <span class="icone">⚖ </span>
+                    <div>
+                        <small>MODELO</small>
+                        <p id="Detalhes_modelo"></p>
+                    </div>
+                </div>
+
+                <div class="detalhe-item">
+                    <span class="icone">↕</span>
+                    <div>
+                        <small>MARCA</small>
+                        <p id="Detalhes_marca"></p>
+                    </div>
+                </div>
+
+                <div class="detalhe-item">
+                    <span class="icone">◷</span>
+                    <div>
+                        <small>PLACA DO VEÍCULO</small>
+                        <p id="Detalhes_placa"></p>
+                    </div>
+                </div>
+                <div class="detalhe-item">
+                    <span class="icone">◷</span>
+                    <div>
+                        <small>ANO DO VEÍCULO</small>
+                        <p id="Detalhes_Ano"></p>
+                    </div>
+                </div>
+                <div class="detalhe-item">
+                    <span class="icone">◷</span>
+                    <div>
+                        <small>COR</small>
+                        <p id="Detalhes_cor"></p>
+                    </div>
+                </div>
+            
+
+            </div>
+
+        </div>
+
+    </dialog>
+    <script src="../api.js"></script>
+    <script src="./script.js"></script>
+</body>
+
+</html>
