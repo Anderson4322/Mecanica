@@ -121,8 +121,8 @@ function renderizar(prods) {
                 <td>${element.valor}</td>
                 <td>
                 <div id="buttonMove">
-                ${cargo != 1 ? `<button id="deletar" onclick="deletar(${element.id_services})">🗑️</button>` : '<div></div>'}
-                ${cargo != 1 ? `<button id="editar" onclick="editar(${element.id_services})">✏️</button>` : '<div></div>'}                
+                ${cargo != 1 ? `<button id="deletar" onclick="deletar(${element.id_service})">🗑️</button>` : '<div></div>'}
+                ${cargo != 1 ? `<button id="editar" onclick="editar(${element.id_service})">✏️</button>` : '<div></div>'}                
                 ${cargo != 1 ? `<button id="ficha" onclick="ficha(${element.id_clients})">🗃️</button>` : '<div></div>'}                
                 </div>
                 </td>
@@ -177,11 +177,11 @@ async function deletar(id) {
 }
 
 async function editar(id) {
-    const produto = await fetch(`${api}treinos_especif/${id}`);
+    const produto = await fetch(`${api}servicos_especif/${id}`);
     const prod = await produto.json();
     const datas = {
-        nome_treino: prompt("Nome do treino", prod.nome_treino),
-        exercicio: prompt("Exercicios", prod.exercicio),
+        dat_saida: prompt("Nome do Data de saida", prod.dat_saida),
+        tipo_servico: prompt("Tipo de serviço", prod.tipo_servico),
 
     };
     const resposta = await fetch(`${api}editar/${id}`, {

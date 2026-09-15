@@ -26,7 +26,7 @@ if (resposta.status == 200) {
     console.log(usuarios);
 
 
-    window.location.href = "../home/index.html";
+    return window.location.href = "../home/index.html";
 } 
    return alert("Usuario ou senha incorretos");
 

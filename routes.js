@@ -131,10 +131,10 @@ routes.get("/servicos", async (req, res) => {
 
 routes.post("/cad_services", async (req, res) => {
   try {
-    const { data_entrada, descricao, tipo_servico, situacao, valor, id_veiculo } = req.body;
-    console.log(req.body)
+    const { dat_entrada, descricao, tipo_servico, situacao, valor, id_veiculo } = req.body;
+    console.log(dat_entrada,descricao,tipo_servico,situacao,valor,id_veiculo)
     const resposta =
-      await sql`INSERT INTO services(data_entrada,descricao, tipo_servico, situacao, valor, id_veiculo) VALUES (${data_entrada}, ${descricao}, ${tipo_servico}, ${situacao}, ${valor}, ${id_veiculo}) RETURNING *`;
+      await sql`INSERT INTO services(dat_entrada,descricao, tipo_servico, situacao, valor, id_veiculo) VALUES (${dat_entrada}, ${descricao}, ${tipo_servico}, ${situacao}, ${valor}, ${id_veiculo}) RETURNING *`;
     return res.status(201).json(resposta[0]);
   } catch (error) {
     console.log(error);
@@ -158,10 +158,10 @@ routes.delete("/deleta/:id", async (req, res) => {
 routes.put("/editar/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { data_saida, descricao, valor } = req.body;
+    const { data_saida, tipo_servico, valor } = req.body;
     console.log(req.params)
     const resposta =
-      await sql`update services set dat_saida = ${data_saida}, descricao = ${descricao}, valor=${valor} where id_service= ${id} RETURNING *`;
+      await sql`update services set dat_saida = ${data_saida}, tipo_servico = ${tipo_servico}, valor=${valor} where id_service= ${id} RETURNING *`;
     return res.status(201).json(resposta[0]);
   } catch (error) {
     console.error(error);
