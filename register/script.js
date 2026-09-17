@@ -2,8 +2,8 @@
 document.querySelector("form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const password = document.querySelector("#senha").value;
     const user = document.querySelector("#nome").value;
+    const password = document.querySelector("#senha").value;
     const email = document.querySelector("#email").value;
     const cpf = document.querySelector("#cpf").value;
     const telefone = document.querySelector("#telefone").value;
