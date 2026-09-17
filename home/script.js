@@ -4,8 +4,6 @@ const btnCadastro = document.querySelector(".cadastro")
 const cargo = localStorage.getItem("cargo")
 const nome = localStorage.getItem("nome")
 
-
-const alertModal = document.querySelector("#modalLogin");
 if (!nome) {
     userName.textContent = " Visitante"
 } else if (cargo == 2) {
@@ -33,6 +31,16 @@ document.querySelector("#close").addEventListener('click', () => {
     modal.close()
 })
 
+const modalCar = document.querySelector("#modalCar")
+
+document.querySelector("#MaisCarro").addEventListener('click',()=>{
+    modalCar.showModal()
+})
+
+document.querySelector("#closeModalCar").addEventListener('click', ()=>{
+    modalCar.close()
+})
+
 const form = document.querySelector("form")
 const corpo = document.querySelector("tbody")
 const quantidade = document.querySelector("#nProdutos")
@@ -45,7 +53,6 @@ if (total == 0) {
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const dat_entrada = document.querySelector("#dat_entrada").value;
     const descricao = document.querySelector("#descricao").value;
     const tipo_servico = document.querySelector("#tipo_servico").value;
     const situacao = document.querySelector("#situacao").value;
@@ -58,7 +65,6 @@ form.addEventListener("submit", async (e) => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-        dat_entrada,
         descricao,
         tipo_servico,
         situacao,
@@ -91,8 +97,9 @@ const id_clients = localStorage.getItem("id")
 window.addEventListener("load", async () => {
     const resposta = await fetch(`${api}manutencao/${cargo}/${id_clients}`);
     const usuarios = await fetch(`${api}carrosUsers`);
-
+    
     prods = await resposta.json();
+    
     const users = await usuarios.json();
     users.forEach((prod) => {
         id_fabric.innerHTML += `
@@ -108,15 +115,15 @@ window.addEventListener("load", async () => {
 function renderizar(prods) {
     prods.forEach((element) => {
         corpo.innerHTML += `     <tr>
-                <td>${element.id_services}</td>
+                <td>${element.id_service}</td>
                 <td>${element.nome_user}</td>
                 <td>${element.modelo}</td>
                 <td>${element.marca}</td>
                 <td>${element.cor}</td>
                 <td>${element.descricao}</td>
+                <td>${element.situacao}</td>
                 <td>${element.dat_entrada}</td>
                 <td>${element.dat_saida}</td>
-                <td>${element.situacao}</td>
                 <td>${element.tipo_servico}</td>
                 <td>${element.valor}</td>
                 <td>
@@ -127,6 +134,7 @@ function renderizar(prods) {
                 </div>
                 </td>
             </tr>`;
+            console.log(prods)
         total++;
         quantidade.textContent = "Total de serviços:" + total;
     });
@@ -142,7 +150,6 @@ async function ficha(id) {
 
     const usuario = await fetch(`${api}usuario_especif/${id}`);
     const user = await usuario.json();
-    const divDesativar = document.querySelector("#divDesativar")
     const modalDetalhes = document.querySelector("#DetalhesModal")
     const Nome_aluno = document.querySelector("#Nome_aluno")
     const Detalhes_modelo = document.querySelector("#Detalhes_modelo")
@@ -162,6 +169,34 @@ async function ficha(id) {
 
     modalDetalhes.showModal()
 }
+document.querySelector("#formCar").addEventListener('submit', async(e)=>{
+e.preventDefault();
+
+const modelo = document.querySelector("#modeloCar").value;
+    const marca = document.querySelector("#marcaCar").value;
+    const placa = document.querySelector("#placaCar").value;
+    const cor = document.querySelector("#corCar").value;
+    const id_proprietario = localStorage.getItem("id")
+    const resposta = await fetch(`${api}cadastroCar`, {
+        method: "post",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+            modelo,
+            marca,
+            placa,
+            cor,
+            id_proprietario
+        })
+    })
+    if (resposta != 201) {
+        console.log("Erro em:" + Error)
+        return alert("Error ao cadastro de veiculo")
+    }
+    else {
+        return alert("Carro concluido")
+    }
+})
+    
 
 
 

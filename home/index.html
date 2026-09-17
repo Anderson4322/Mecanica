@@ -22,8 +22,8 @@
         </header>
 
         <div id="moveAdress">
-        
-<button id="MaisCarro">Adicionar Carro</button>
+
+            <button id="MaisCarro">Adicionar Carro</button>
             <button id="open">+</button>
         </div>
         <dialog id="modal">
@@ -33,8 +33,6 @@
 
                     <button type="button" id="close">X</button>
                 </div>
-                <label for="Data de entrada">Data de entrada</label>
-                <input type="date" name="Data de entrada" id="dat_entrada">
                 <label for="Descrição">Descrição:</label>
                 <input type="text" name="Descrição" id="descricao">
                 <label for="tipo de serviço">Tipo de serviço:</label>
@@ -48,8 +46,8 @@
                 </select>
                 <label for="usuario">Usuarios:</label>
                 <select name="usuario" id="id_usuario">
-                    </select>
-                    <button id="btn-confirmar" type="submit">Confirmar</button>
+                </select>
+                <button id="btn-confirmar" type="submit">Confirmar</button>
             </form>
         </dialog>
         <div id="text-information">
@@ -138,12 +136,28 @@
                         <p id="Detalhes_cor"></p>
                     </div>
                 </div>
-            
+
 
             </div>
 
         </div>
 
+    </dialog>
+
+    <dialog id="modalCar">
+        <button id="closeModalCar">X</button>
+        <form id="formCar">
+
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="modeloCar" required>
+            <label for="marca">Marca:</label>
+            <input type="text" id="marcaCar" required>
+            <label for="placa">Placa do veiculo:</label>
+            <input type="text" id="placaCar" required>
+            <label for="cor">Cor do veiculo:</label>
+            <input type="text" id="corCar" required>
+            <button id="cadastroCarros" type="submit">Cadastrar carro</button>
+        </form>
     </dialog>
     <script src="../api.js"></script>
     <script src="./script.js"></script>

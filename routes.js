@@ -88,7 +88,7 @@ routes.get("/manutencao/:cargo/:id_clients", async (req, res) => {
   console.log(cargo, id_clients)
 
   let rows;
-  if (cargo === "Funcionario") {
+  if (cargo == 2) {
     rows = await sql`
        
           SELECT *
@@ -131,11 +131,11 @@ routes.get("/servicos", async (req, res) => {
 
 routes.post("/cad_services", async (req, res) => {
   try {
-    const { dat_entrada, descricao, tipo_servico, situacao, valor, id_veiculo } = req.body;
-    console.log(dat_entrada,descricao,tipo_servico,situacao,valor,id_veiculo)
+    const {  descricao, tipo_servico, situacao, valor, id_veiculo } = req.body;
+    console.log(descricao,tipo_servico,situacao,valor,id_veiculo)
     const resposta =
-      await sql`INSERT INTO services(dat_entrada,descricao, tipo_servico, situacao, valor, id_veiculo) VALUES (${dat_entrada}, ${descricao}, ${tipo_servico}, ${situacao}, ${valor}, ${id_veiculo}) RETURNING *`;
-    return res.status(201).json(resposta[0]);
+      await sql`INSERT INTO services(descricao, tipo_servico, situacao, valor, id_veiculo) VALUES (${descricao}, ${tipo_servico}, ${situacao}, ${valor}, ${id_veiculo}) RETURNING *`;
+    return res.status(201).json(resposta);
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -143,6 +143,18 @@ routes.post("/cad_services", async (req, res) => {
     });
   }
 });
+
+routes.post("/cadastroCar", async (req, res) => {
+  try {
+    const { modelo, marca, placa, cor, id_proprietario } = req.body;
+    const resposta = await sql`insert into carros(modelo,marca, placa_veiculo,cor, id_proprietario)values(${modelo}, ${marca}, ${placa},${cor},${id_proprietario})`
+    console.log(resposta)
+    return res.status(201).json(resposta)
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ error: "Falha ao cadastrar o veiculo" })
+  }
+})
 
 routes.delete("/deleta/:id", async (req, res) => {
   try {
