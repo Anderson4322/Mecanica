@@ -1,110 +1,217 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Consolas", "SF Mono", "Segoe UI", Arial, sans-serif;
+}
+
+:root {
+  --asfalto: #161616;
+  --asfalto-claro: #232323;
+  --aco: #3a3a3a;
+  --aco-claro: #4d4d4d;
+  --amarelo: #ffcc00;
+  --amarelo-escuro: #d1a600;
+  --amarelo-glow: rgba(255, 204, 0, 0.22);
+  --branco: #f4f4f2;
+  --texto-suave: #9a9a9a;
+  --erro: #e33a3a;
+  --sombra-1: rgba(0, 0, 0, 0.35);
+  --sombra-2: rgba(0, 0, 0, 0.55);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 body {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background-color: #0d0d0d;
-    background-image: url("../imagem/ChatGPT\ Image\ 27\ de\ ago.\ de\ 2026\,\ 14_26_50\ \(1\).png");
-    background-size: cover;
-    background-position: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--asfalto);
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.035) 0, transparent 40%),
+    radial-gradient(circle at 85% 75%, rgba(255, 204, 0, 0.05) 0, transparent 45%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 10px);
+  padding: 20px;
 }
 
 /* Caixa do login */
 div {
-    width: 350px;
-    background: #f5f5f5;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, .45);
+  width: 100%;
+  max-width: 380px;
+  background: var(--asfalto-claro);
+  padding: 40px 34px 34px;
+  border-radius: 10px;
+  border: 1px solid var(--aco);
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 30px 60px var(--sombra-2),
+    0 10px 20px var(--sombra-1);
+  animation: entrada 0.45s var(--ease);
+}
+
+/* Faixa de risco no topo do card, no lugar de uma borda simples */
+div::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--amarelo) 0,
+    var(--amarelo) 10px,
+    var(--asfalto) 10px,
+    var(--asfalto) 20px
+  );
+}
+
+@keyframes entrada {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Formulário */
 form {
-    display: flex;
-    flex-direction: column;
-    background: transparent;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
 }
 
 /* Título */
 form h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #1a1a1a;
+  text-align: center;
+  margin-bottom: 6px;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--branco);
+}
+
+form h1::after {
+  content: "";
+  display: block;
+  width: 42px;
+  height: 3px;
+  margin: 14px auto 26px;
+  background: var(--amarelo);
+  border-radius: 999px;
 }
 
 /* Labels */
 label {
-    margin-bottom: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #3d3d3d;
+  display: block;
+  margin-bottom: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--amarelo);
 }
 
 /* Inputs */
 #nome,
 #senha {
-    width: 100%;
-    height: 36px;
-    padding: 0 12px;
-    margin-bottom: 14px;
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  margin-bottom: 18px;
 
-    border: 2px solid #bdbdbd;
-    border-radius: 8px;
+  border: 1.5px solid var(--aco-claro);
+  border-radius: 6px;
 
-    outline: none;
+  outline: none;
 
-    background: #ffffff;
-    color: #1a1a1a;
-    font-size: 14px;
+  background: #101010;
+  color: var(--branco);
+  font-size: 14px;
+  font-family: inherit;
 
-    transition: .3s;
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease), background-color 0.2s var(--ease);
 }
 
-/* Efeito ao clicar no input */
+#nome::placeholder,
+#senha::placeholder {
+  color: #666666;
+}
+
+/* Efeito ao focar no input */
 #nome:focus,
 #senha:focus {
-    border-color: #ff3b00;
-    box-shadow: 0 0 0 2px rgba(255, 59, 0, .15);
+  border-color: var(--amarelo);
+  background: #141414;
+  box-shadow: 0 0 0 3px var(--amarelo-glow);
 }
+
+
 
 /* Botão */
 #enviar {
-    height: 42px;
+  height: 46px;
+  margin-top: 6px;
+  margin-bottom: 16px;
 
-    border: none;
-    border-radius: 8px;
+  border: none;
+  border-radius: 6px;
 
-    background: #111111;
-    color: #ff3b00;
+  background: var(--amarelo);
+  color: var(--asfalto);
 
-    font-size: 15px;
-    font-weight: 600;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    transition: .3s;
+  box-shadow: 0 4px 0 var(--amarelo-escuro), 0 8px 18px var(--sombra-1);
+  transition: transform 0.15s var(--ease), box-shadow 0.15s var(--ease), background-color 0.2s var(--ease);
 }
 
 /* Hover do botão */
 #enviar:hover {
-    background: #ff3b00;
-    color: #ffffff;
-
-    transform: translateY(-2px);
-
-    box-shadow: 0 8px 15px rgba(255, 59, 0, .35);
+  background: #ffd633;
 }
 
-/* Clique */
+/* Foco por teclado, sem depender só do hover */
+#enviar:focus-visible {
+  outline: 3px solid var(--amarelo-glow);
+  outline-offset: 3px;
+}
+
+/* Clique — efeito de botão físico sendo pressionado */
 #enviar:active {
-    transform: scale(.98);
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--amarelo-escuro), 0 4px 10px var(--sombra-1);
+}
+
+/* Link de cadastro */
+a {
+  display: block;
+  text-align: center;
+  font-size: 12.5px;
+  letter-spacing: 0.3px;
+  color: var(--texto-suave);
+  text-decoration: none;
+  transition: color 0.2s var(--ease);
+}
+
+a:hover {
+  color: var(--amarelo);
+  text-decoration: underline;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--amarelo-glow);
+  outline-offset: 3px;
+  border-radius: 3px;
 }
