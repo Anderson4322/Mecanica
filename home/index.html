@@ -125,13 +125,6 @@
                 <div class="detalhe-item">
                     <span class="icone">◷</span>
                     <div>
-                        <small>ANO DO VEÍCULO</small>
-                        <p id="Detalhes_Ano"></p>
-                    </div>
-                </div>
-                <div class="detalhe-item">
-                    <span class="icone">◷</span>
-                    <div>
                         <small>COR</small>
                         <p id="Detalhes_cor"></p>
                     </div>
@@ -157,6 +150,20 @@
             <label for="cor">Cor do veiculo:</label>
             <input type="text" id="corCar" required>
             <button id="cadastroCarros" type="submit">Cadastrar carro</button>
+        </form>
+    </dialog>
+    <dialog id="modalEditar">
+        <button id="closeModalEditar">X</button>
+        <form id="formEditar">
+            <label for="dat_saida">Data de saída:</label>
+            <input type="date" id="dat_saida1" required>
+            <label for="tipo_servico">Tipo de serviço:</label>
+            <input type="text" id="tipo_servico1" required>
+            <label for="valor">Valor:</label>
+            <input type="number" id="valor1" required>
+            <label for="situacao">Situacao:</label>
+            <input type="text" id="situacao1" required>
+            <button id="editarServico" type="submit">Editar serviço</button>
         </form>
     </dialog>
     <script src="../api.js"></script>

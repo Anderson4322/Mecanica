@@ -72,7 +72,7 @@ routes.post("/cadastro", async (req, res) => {
 //     console.log(req.params)
 //     const { status } = req.body;
 //     const resposta = await sql`UPDATE clients
-// 	SET status=${status} WHERE id_user=${id} RETURNING *;`;
+// 	SET status=${status} WHERE id_user=${id} RETURNING '*;`;
 //     return res.status(200).json(resposta[0]);
 //   } catch (error) {
 //     console.error(error);
@@ -85,8 +85,6 @@ routes.post("/cadastro", async (req, res) => {
 //manutenção
 routes.get("/manutencao/:cargo/:id_clients", async (req, res) => {
   const { cargo, id_clients } = req.params;
-  console.log(cargo, id_clients)
-
   let rows;
   if (cargo == 2) {
     rows = await sql`
@@ -124,15 +122,15 @@ routes.get("/servicos_especif/:id", async (req, res) => {
 });
 
 routes.get("/servicos", async (req, res) => {
-  
+
   const resposta = await sql`select * from services`;
   return res.status(200).json(resposta);
 });
 
 routes.post("/cad_services", async (req, res) => {
   try {
-    const {  descricao, tipo_servico, situacao, valor, id_veiculo } = req.body;
-    console.log(descricao,tipo_servico,situacao,valor,id_veiculo)
+    const { descricao, tipo_servico, situacao, valor, id_veiculo } = req.body;
+    console.log(descricao, tipo_servico, situacao, valor, id_veiculo)
     const resposta =
       await sql`INSERT INTO services(descricao, tipo_servico, situacao, valor, id_veiculo) VALUES (${descricao}, ${tipo_servico}, ${situacao}, ${valor}, ${id_veiculo}) RETURNING *`;
     return res.status(201).json(resposta);
@@ -147,6 +145,7 @@ routes.post("/cad_services", async (req, res) => {
 routes.post("/cadastroCar", async (req, res) => {
   try {
     const { modelo, marca, placa, cor, id_proprietario } = req.body;
+    console.log(req.body)
     const resposta = await sql`insert into carros(modelo,marca, placa_veiculo,cor, id_proprietario)values(${modelo}, ${marca}, ${placa},${cor},${id_proprietario})`
     console.log(resposta)
     return res.status(201).json(resposta)
@@ -170,10 +169,10 @@ routes.delete("/deleta/:id", async (req, res) => {
 routes.put("/editar/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { data_saida, tipo_servico, valor } = req.body;
-    console.log(req.params)
+    const { data_saida, tipo_servico, valor, situacao } = req.body;
+    console.log(req.body)
     const resposta =
-      await sql`update services set dat_saida = ${data_saida}, tipo_servico = ${tipo_servico}, valor=${valor} where id_service= ${id} RETURNING *`;
+      await sql`update services set dat_saida = ${data_saida}, tipo_servico = ${tipo_servico}, valor=${valor}, situacao=${situacao} where id_service= ${id} RETURNING *`;
     return res.status(201).json(resposta[0]);
   } catch (error) {
     console.error(error);

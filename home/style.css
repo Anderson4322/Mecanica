@@ -588,7 +588,7 @@ form label {
    MODAL DETALHES
 ============================ */
 #DetalhesModal {
-  margin-left: auto;
+  margin-left: 40%;
   margin-right: 5vw;
   width: 420px;
   max-width: 90vw;

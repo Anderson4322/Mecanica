@@ -8,7 +8,7 @@ if (!nome) {
     userName.textContent = " Visitante"
 } else if (cargo == 2) {
     userName.textContent = `Bem vindo funcionario: ${nome}`
-} else{
+} else {
     userName.textContent = `Bem vindo ${nome}`
 }
 
@@ -19,25 +19,25 @@ if (cargo == 1) {
     openButton.style.display = "none"
 }
 const modal = document.querySelector("#modal")
-document.querySelector("#open").addEventListener('click', () => {
-    const user = localStorage.getItem("nome")
-
-    if (!user) {
-        return alertModal.showModal()
-    }
+openButton.addEventListener('click', () => {
     modal.showModal()
 })
+
 document.querySelector("#close").addEventListener('click', () => {
     modal.close()
 })
 
 const modalCar = document.querySelector("#modalCar")
 
-document.querySelector("#MaisCarro").addEventListener('click',()=>{
+document.querySelector("#MaisCarro").addEventListener('click', () => {
     modalCar.showModal()
 })
+const MaisCarro = document.querySelector("#MaisCarro")
+if (cargo == 2) {
+    MaisCarro.style.display = "none"
+}
 
-document.querySelector("#closeModalCar").addEventListener('click', ()=>{
+document.querySelector("#closeModalCar").addEventListener('click', () => {
     modalCar.close()
 })
 
@@ -65,11 +65,11 @@ form.addEventListener("submit", async (e) => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-        descricao,
-        tipo_servico,
-        situacao,
-        valor,
-        id_veiculo
+            descricao,
+            tipo_servico,
+            situacao,
+            valor,
+            id_veiculo
         }),
     });
 
@@ -97,9 +97,9 @@ const id_clients = localStorage.getItem("id")
 window.addEventListener("load", async () => {
     const resposta = await fetch(`${api}manutencao/${cargo}/${id_clients}`);
     const usuarios = await fetch(`${api}carrosUsers`);
-    
+
     prods = await resposta.json();
-    
+
     const users = await usuarios.json();
     users.forEach((prod) => {
         id_fabric.innerHTML += `
@@ -129,12 +129,12 @@ function renderizar(prods) {
                 <td>
                 <div id="buttonMove">
                 ${cargo != 1 ? `<button id="deletar" onclick="deletar(${element.id_service})">🗑️</button>` : '<div></div>'}
-                ${cargo != 1 ? `<button id="editar" onclick="editar(${element.id_service})">✏️</button>` : '<div></div>'}                
+                ${cargo != 1 ? `<button id="edita" onclick="editar(${element.id_service})">✏️</button>` : '<div></div>'}                
                 ${cargo != 1 ? `<button id="ficha" onclick="ficha(${element.id_clients})">🗃️</button>` : '<div></div>'}                
                 </div>
                 </td>
             </tr>`;
-            console.log(prods)
+        console.log(prods)
         total++;
         quantidade.textContent = "Total de serviços:" + total;
     });
@@ -156,23 +156,19 @@ async function ficha(id) {
     const Detalhes_marca = document.querySelector("#Detalhes_marca")
     const Detalhes_placa = document.querySelector("#Detalhes_placa")
     const Detalhes_cor = document.querySelector("#Detalhes_cor")
-    const Detalhes_Ano = document.querySelector("#Detalhes_Ano")
-
-
     Nome_aluno.textContent = `Ficha do Proprietario: ${user.nome_user}`
     Nome_aluno.style.fontSize = "20px"
     Detalhes_modelo.textContent = `${user.modelo}`
     Detalhes_marca.textContent = ` ${user.marca}`
     Detalhes_placa.textContent = `${user.placa_veiculo}`
-    Detalhes_Ano.textContent = `${user.ano_veiculo}`
     Detalhes_cor.textContent = `${user.cor}`
 
     modalDetalhes.showModal()
 }
-document.querySelector("#formCar").addEventListener('submit', async(e)=>{
-e.preventDefault();
+document.querySelector("#formCar").addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-const modelo = document.querySelector("#modeloCar").value;
+    const modelo = document.querySelector("#modeloCar").value;
     const marca = document.querySelector("#marcaCar").value;
     const placa = document.querySelector("#placaCar").value;
     const cor = document.querySelector("#corCar").value;
@@ -188,18 +184,15 @@ const modelo = document.querySelector("#modeloCar").value;
             id_proprietario
         })
     })
-    if (resposta != 201) {
-        console.log("Erro em:" + Error)
-        return alert("Error ao cadastro de veiculo")
+    if (resposta.status === 201) {
+        alert("Veiculo cadastrado com sucesso")
+        return window.location.reload()
     }
     else {
-        return alert("Carro concluido")
+        console.log(resposta.error)
+        return alert("Error ao cadastro de veiculo")
     }
 })
-    
-
-
-
 
 async function deletar(id) {
     const resposta = await fetch(`${api}deleta/${id}`, {
@@ -211,14 +204,19 @@ async function deletar(id) {
     return alert("erro ao deletar");
 }
 
+const modalEditar = document.querySelector("#modalEditar")
+
 async function editar(id) {
-    const produto = await fetch(`${api}servicos_especif/${id}`);
+   const produto = await fetch(`${api}servicos_especif/${id}`);
     const prod = await produto.json();
     const datas = {
         dat_saida: prompt("Nome do Data de saida", prod.dat_saida),
         tipo_servico: prompt("Tipo de serviço", prod.tipo_servico),
+        valor: prompt("Valor", prod.valor),
+        situacao: prompt("Situacao", prod.situacao),
 
     };
+
     const resposta = await fetch(`${api}editar/${id}`, {
         method: "put",
         headers: { "content-type": "application/json" },
@@ -228,7 +226,6 @@ async function editar(id) {
         window.location.reload()
     }
     else {
-
         return alert("erro ao editar");
     }
 }
