@@ -13,7 +13,6 @@ id_car serial primary key,
 modelo varchar(255) not null, 
 marca varchar(255) not null, 
 placa_veiculo varchar(255) unique not null,
-ano_veiculo int not null,
 cor varchar(50) not null,
 id_proprietario int references clients(id_clients)
 );
@@ -48,14 +47,12 @@ INSERT INTO carros (
     modelo,
     marca,
     placa_veiculo,
-    ano_veiculo,
     cor,
     id_proprietario
 ) VALUES (
     'Civic',
     'Honda',
     'ABC3',
-    2022,
     'Preto',
     1
 );
@@ -77,5 +74,7 @@ INSERT INTO services (
 select * from services;
 select * from carros;
 select * from clients;
+
+
 
 update clients set cargo = 2 where id_clients = 1
