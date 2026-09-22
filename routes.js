@@ -169,10 +169,9 @@ routes.delete("/deleta/:id", async (req, res) => {
 routes.put("/editar/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { data_saida, tipo_servico, valor, situacao } = req.body;
-    console.log(req.body)
+    const { dat_saida, tipo_servico, valor, situacao } = req.body;
     const resposta =
-      await sql`update services set dat_saida = ${data_saida}, tipo_servico = ${tipo_servico}, valor=${valor}, situacao=${situacao} where id_service= ${id} RETURNING *`;
+      await sql`update services set dat_saida = ${dat_saida}, tipo_servico = ${tipo_servico}, valor=${valor}, situacao=${situacao} where id_service= ${id} RETURNING *`;
     return res.status(201).json(resposta[0]);
   } catch (error) {
     console.error(error);

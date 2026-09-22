@@ -207,20 +207,22 @@ async function deletar(id) {
 const modalEditar = document.querySelector("#modalEditar")
 
 async function editar(id) {
-   const produto = await fetch(`${api}servicos_especif/${id}`);
+    const produto = await fetch(`${api}servicos_especif/${id}`);
     const prod = await produto.json();
-    const datas = {
-        dat_saida: prompt("Nome do Data de saida", prod.dat_saida),
-        tipo_servico: prompt("Tipo de serviço", prod.tipo_servico),
-        valor: prompt("Valor", prod.valor),
-        situacao: prompt("Situacao", prod.situacao),
-
-    };
+    let dat_saida = prompt("Nome do Data de saida", prod.dat_saida);
+    let tipo_servico = prompt("Tipo de serviço", prod.tipo_servico);
+    let valor = prompt("Valor", prod.valor);
+    let situacao = prompt("Situacao", prod.situacao);
 
     const resposta = await fetch(`${api}editar/${id}`, {
         method: "put",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify(datas),
+        body: JSON.stringify({
+            dat_saida,
+            tipo_servico,
+            valor,
+            situacao
+        }),
     });
     if (resposta.status == 201) {
         window.location.reload()
