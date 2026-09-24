@@ -47,7 +47,7 @@ const quantidade = document.querySelector("#nProdutos")
 
 let total = 0;
 if (total == 0) {
-    quantidade.textContent = "Nenhum treino foi listado"
+    quantidade.textContent = "Nenhum serviço foi listado"
 }
 
 form.addEventListener("submit", async (e) => {

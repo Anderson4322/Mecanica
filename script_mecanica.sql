@@ -1,3 +1,4 @@
+
 create table clients(
 id_clients serial primary key,
 nome_user varchar(255) not null,
@@ -36,7 +37,7 @@ INSERT INTO clients (
     endereco
 ) VALUES (
     'Anderson Felipe',
-    'anderson@email.com',
+    'anderson@gmail.com',
     '123456',
     '123.456.789-00',
     '(17) 99999-9999',
@@ -50,10 +51,23 @@ INSERT INTO carros (
     cor,
     id_proprietario
 ) VALUES (
+    'BMW X6',
+    'BMW',
+    'ijadiwjn718',
+    'Ciano',
+    2
+);
+INSERT INTO carros (
+    modelo,
+    marca,
+    placa_veiculo,
+    cor,
+    id_proprietario
+) VALUES (
     'Civic',
-    'Honda',
-    'ABC3',
-    'Preto',
+    'honda',
+    'abcd1234',
+    'preto',
     1
 );
 INSERT INTO services (
@@ -70,11 +84,12 @@ INSERT INTO services (
     1
 );
 
-
-select * from services;
 select * from carros;
+select * from services
 select * from clients;
 
+drop table clients;
+drop table carros;
+drop table services;
 
-
-update clients set cargo = 2 where id_clients = 1
+           
